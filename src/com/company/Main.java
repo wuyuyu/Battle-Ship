@@ -1,5 +1,4 @@
 package com.company;
-import java.lang.Math;
 
 /*
  * Membres du groupe : Ivann, Laurent, Yuyuan.
