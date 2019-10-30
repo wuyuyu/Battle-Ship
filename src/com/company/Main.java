@@ -150,6 +150,20 @@ public class Main {
         return -1;
     }
 
+    static boolean shoot(int colIdx, int rowIdx, char board[][]) {
+        if (board[rowIdx][colIdx] == '#') { // touché
+            board[rowIdx][colIdx] = 'x';
+            System.out.println("Touché !");
+            return true;
+        } else if (board[rowIdx][colIdx] == 'x') {
+            System.out.println("Vous avez déjà touché cette cible !");
+            return false;
+        } else {
+            System.out.println("Vous n'avez pas atteint votre cible.");
+            board[rowIdx][colIdx] = 'o';
+            return false;
+        }
+    }
     public static void main(String[] args) {
 
         System.out.println("**** Welcome to the battleship game ! **** ");
@@ -168,8 +182,10 @@ public class Main {
         // get row index
         int rowIdx = getInputRowIndex(input);
         if(colIdx != -1 && rowIdx != -1){
+
+            shoot(rowIdx, colIdx, playerBoard);
             // Here i got valid position for ROW and COLUMN indexes
-            // ...
+
         }
     }
 }
