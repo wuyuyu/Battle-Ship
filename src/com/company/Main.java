@@ -57,7 +57,7 @@ public class Main {
     }
 
     /**
-     * createBoat() : Function which returns a random value between 0 included
+     * getRandom() : Function which returns a random value between 0 included
      * and 'maxValue' included.
      */
     static int getRandom(int maxValue){
