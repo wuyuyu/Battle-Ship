@@ -1,14 +1,13 @@
 package com.company;
 
 /*
- * Membres du groupe : Ivann, Laurent, Yuyuan.
+ * Membres du groupe : Ivann, Laurent, Yuyuan, Jérémy.
  *
  * Description   : TP "BATAILLE NAVALE"
  */
 
 import java.util.Random;
 public class Main {
-
 
     /**
      * displayBoard() : Function which displays an empty battlefield (10 rows / 10 columns).
@@ -18,15 +17,15 @@ public class Main {
         String line = " ";
         char letter = 'A';
 
-
         // display letters according to the array width
-        System.out.print("    "); // column index
+        System.out.print("    ");
         for(int j=0;j<board[0].length;j=j+1){
             System.out.print( (char)(letter+j) );
             System.out.print(" ");
         }
         System.out.print("\n");
 
+        // display numbers according to the array height
         for (int i = 0; i < board.length; i = i + 1) { // rows
             line = "";
             for (int j = 0; j < board[0].length; j = j + 1) { // columns
@@ -57,41 +56,48 @@ public class Main {
         createBoat(4,board);
     }
 
-    // returns a    random value between 0 included and 'maxValue' included
+    /**
+     * createBoat() : Function which returns a random value between 0 included
+     * and 'maxValue' included.
+     */
     static int getRandom(int maxValue){
         return (int)( Math.random()*(maxValue+1) );
     }
 
+    /**
+     * createBoat() : Function which creates and displays boats randomly on the battlefield.
+     */
     static void createBoat (int N,char board[][]){
 
         boolean isShipPossible = true;
 
         do {
+            //ALEA
             int HV = getRandom(1);
             int idxRow = getRandom(9);
             int idxCol= getRandom(9);
-
-
             if (HV == 0) {
                 idxCol = getRandom(board[0].length - N);
-            }
-            else {
+            } else {
                 idxRow = getRandom(board.length - N);
             }
 
+            //CHECK
+            isShipPossible = true;
             for (int i = 0; i <= N - 1; i = i + 1) {
                 if (HV == 0) {//vertical
-                    if (board[idxRow][idxCol + i] == '#'){
-                    isShipPossible = false;}
-                }
-                 else {//horizontal
+                    if (board[idxRow][idxCol + i] == '#') {
+                        isShipPossible = false;
+                    }
+                } else {//horizontal
                     if (board[idxRow + i][idxCol] == '#') {
                         isShipPossible = false;
                     }
-                    }
                 }
+            }
 
-            if (isShipPossible = true) {
+            // CREATION
+            if (isShipPossible == true) {
 
                 for (int i = 0; i <= N - 1; i = i + 1) {
                     if (HV == 0) {//vertical
@@ -112,11 +118,7 @@ public class Main {
 
         char playerBoard [][] = new char[10][10] ;
 
-
-
         initBoard(playerBoard);
         displayBoard(playerBoard);
-
-
     }
 }
