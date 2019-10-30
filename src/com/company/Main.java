@@ -55,7 +55,6 @@ public class Main {
         createBoat(3,board);
         createBoat(3,board);
         createBoat(4,board);
-
     }
 
     // returns a    random value between 0 included and 'maxValue' included
@@ -64,42 +63,46 @@ public class Main {
     }
 
     static void createBoat (int N,char board[][]){
-        // une valeur aleatoire pour l'orientation (H / V)
-        // idxCol generer une valeur aleatoire pour la position colonne   idxCol = getRandom(9);
-        // idxRow une aleatoire pour la ligne
 
-        // on boucle sur la taille du bateau (variable i de 0 a N-1 inclu)
-        // on va ecrire le caractere # pour chaque case du bateau ( board[idxRow][idxCol+i] = '#'; ) // Horizontal
-        // on va ecrire le caractere # pour chaque case du bateau ( board[idxRow+i][idxCol] = '#'; ) // Vertical
+        boolean isShipPossible = true;
 
-
-// encadrer le code par un while(shipExisting == true)
-
-        int HV = getRandom(1);
-        int idxRow = getRandom(9);
-        int idxCol = getRandom(9);
-        if (HV==0) {
-            idxCol = getRandom(board[0].length-N);
-        }
-        else{
-            idxRow = getRandom(board.length-N);
-        }
-
-        // boucle sur les cases du bateau 
-        // si deja une case # alors on met un booleen "shipExisting" a true
+        do {
+            int HV = getRandom(1);
+            int idxRow = getRandom(9);
+            int idxCol= getRandom(9);
 
 
-        // encadrer ce code par if(shipExisting == false)
-        int i;
-        for(i=0;i<=N-1;i=i+1){
-            if(HV==0){
-                board[idxRow][idxCol+i] = '#';
+            if (HV == 0) {
+                idxCol = getRandom(board[0].length - N);
             }
-            else{
-                board[idxRow+i][idxCol] = '#';
+            else {
+                idxRow = getRandom(board.length - N);
+            }
+
+            for (int i = 0; i <= N - 1; i = i + 1) {
+                if (HV == 0) {//vertical
+                    if (board[idxRow][idxCol + i] == '#'){
+                    isShipPossible = false;}
+                }
+                 else {//horizontal
+                    if (board[idxRow + i][idxCol] == '#') {
+                        isShipPossible = false;
+                    }
+                    }
+                }
+
+            if (isShipPossible = true) {
+
+                for (int i = 0; i <= N - 1; i = i + 1) {
+                    if (HV == 0) {//vertical
+                        board[idxRow][idxCol + i] = '#';
+                    } else {//horizontal
+                        board[idxRow + i][idxCol] = '#';
+                    }
+                }
             }
         }
-
+            while (isShipPossible == false);
     }
 
     public static void main(String[] args) {
