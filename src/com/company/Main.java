@@ -86,11 +86,11 @@ public class Main {
             //CHECK
             isShipPossible = true;
             for (int i = 0; i <= N - 1; i = i + 1) {
-                if (HV == 0) {//vertical
+                if (HV == 0) {//horizontal
                     if (board[idxRow][idxCol + i] == '#') {
                         isShipPossible = false;
                     }
-                } else {//horizontal
+                } else {//vertical
                     if (board[idxRow + i][idxCol] == '#') {
                         isShipPossible = false;
                     }
@@ -150,30 +150,22 @@ public class Main {
         return -1;
     }
 
-    static boolean shoot(int colIdx, int rowIdx, char board[][]) {
-        if (board[rowIdx][colIdx] == '#') { // touché
+    static boolean shoot(int rowIdx, int colIdx, char board[][]) {
+        if (board[rowIdx][colIdx] == '#') { // touched
             board[rowIdx][colIdx] = 'x';
             System.out.println("Touché !");
             return true;
-        } else if (board[rowIdx][colIdx] == 'x') {
+        } else if (board[rowIdx][colIdx] == 'x') {//already touched
             System.out.println("Vous avez déjà touché cette cible !");
             return false;
-        } else {
+        } else { //failed
             System.out.println("Vous n'avez pas atteint votre cible.");
             board[rowIdx][colIdx] = 'o';
             return false;
         }
     }
-    public static void main(String[] args) {
 
-        System.out.println("**** Welcome to the battleship game ! **** ");
-        System.out.println(" ");
-
-        char playerBoard [][] = new char[10][10] ;
-
-        initBoard(playerBoard);
-        displayBoard(playerBoard);
-
+    static boolean turnPlayer(char board[][]) {
         System.out.println("Entrez des coordonnées : ");
         Scanner sc = new Scanner(System.in);
         String input = sc.next();
@@ -182,10 +174,50 @@ public class Main {
         // get row index
         int rowIdx = getInputRowIndex(input);
         if(colIdx != -1 && rowIdx != -1){
-
-            shoot(rowIdx, colIdx, playerBoard);
+            System.out.print("PLAYER : ");
+            return shoot(rowIdx, colIdx, board);
             // Here i got valid position for ROW and COLUMN indexes
-
         }
+        else{
+            // i typed something wrong
+            return true;
+        }
+    }
+
+    static boolean turnEnemy(char board[][]) {
+        int colIdx = getRandom(9);
+        int rowIdx = getRandom(9);
+        System.out.print("CPU : ");
+        return shoot(rowIdx, colIdx, board);
+    }
+
+    public static void main(String[] args) {
+
+        System.out.println("**** Welcome to the battleship game ! **** ");
+        System.out.println(" ");
+
+        char playerBoard [][] = new char[10][10] ;
+        char enemyBoard [][] = new char[10][10];
+
+        initBoard(enemyBoard);
+        initBoard(playerBoard);
+
+        // game loop
+        while( true ){
+            displayBoard(enemyBoard);
+            displayBoard(playerBoard);
+
+            /*if(      ) {
+                // recup retour de turnplayer
+                // si c false, alors ca l'ordi de jouer : modif du booleen cestmontour
+                turnPlayer(enemyBoard);
+            }
+            else{
+                // recjup retour de turnenemey
+                // si c false alors c a moi de jouer : modif la valeur du booleen
+                turnEnemy(playerBoard);
+            }*/
+        }
+
     }
 }
