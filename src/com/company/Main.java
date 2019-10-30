@@ -7,6 +7,7 @@ package com.company;
  */
 
 import java.util.Random;
+import java.util.Scanner;
 public class Main {
 
     /**
@@ -111,6 +112,44 @@ public class Main {
             while (isShipPossible == false);
     }
 
+    /**
+     * function that takes a string as a parameter and checks if the first character
+     * is between A and J.
+     * if it is not the case, it returns -1
+     */
+        static int getInputColIndex(String s){
+            if(s.length() > 0){
+                char first = s.toLowerCase().charAt(0);
+            if(first >= 'a' && first <= 'j') {
+                return (first-'a');
+            }
+        }
+        return -1;
+        }
+
+    /**
+     *function that takes a string as a parameter and checks if second and third characters
+     * are between '1' and '10'.
+     *if it is not the case, it returns -1
+     */
+    static int getInputRowIndex(String s){
+        if(s.length() > 1){
+            char second = s.toLowerCase().charAt(1);
+            if(second >= '1' && second <= '9') {
+                if(s.length() > 2) {
+                    char third = s.toLowerCase().charAt(2);
+                    if (third == '0') {
+                        return Integer.parseInt(s.substring(1, 2))-1;
+                    }
+                }
+                else{
+                    return (second-'0'-1);
+                }
+            }
+        }
+        return -1;
+    }
+
     public static void main(String[] args) {
 
         System.out.println("**** Welcome to the battleship game ! **** ");
@@ -120,5 +159,17 @@ public class Main {
 
         initBoard(playerBoard);
         displayBoard(playerBoard);
+
+        System.out.println("Entrez des coordonnées : ");
+        Scanner sc = new Scanner(System.in);
+        String input = sc.next();
+        // get column index
+        int colIdx = getInputColIndex(input);
+        // get row index
+        int rowIdx = getInputRowIndex(input);
+        if(colIdx != -1 && rowIdx != -1){
+            // Here i got valid position for ROW and COLUMN indexes
+            // ...
+        }
     }
 }
