@@ -14,7 +14,7 @@ public class Main {
     /**
      * displayBoard() : Function which displays an empty battlefield (10 rows / 10 columns).
      */
-    public static void displayBoard(char board[][]) {
+    public static void displayBoard(char board[][], boolean isHidden) {
 
         String line = " ";
         char letter = 'A';
@@ -31,7 +31,12 @@ public class Main {
         for (int i = 0; i < board.length; i = i + 1) { // rows
             line = "";
             for (int j = 0; j < board[0].length; j = j + 1) { // columns
-                line = line + board[i][j] + " ";
+                if (board[i][j] == '#' && isHidden == true) {
+                    line = line + "~" + " ";
+                }
+                else {
+                    line = line + board[i][j] + " ";
+                }
             }
             if (i < 9) {
                 System.out.print(" ");
@@ -239,9 +244,9 @@ public class Main {
             // int lifePlayer = scanShip(playerBoard);
 
                 while (gameOver == false) {
-                    displayBoard(enemyBoard);
+                    displayBoard(enemyBoard,true);
                     System.out.println(" ");
-                    displayBoard(playerBoard);
+                    displayBoard(playerBoard,false);
 
                     if (isMyTurn) {
                         // recup retour de turnplayer
