@@ -56,11 +56,11 @@ public class Main {
                 board[i][j] = '~';
             }
         }
-//        createBoat(5, board);
+        createBoat(5, board);
         createBoat(2, board);
-/*        createBoat(3, board);
         createBoat(3, board);
-        createBoat(4, board);*/
+        createBoat(3, board);
+        createBoat(4, board);
     }
 
     /**
@@ -77,7 +77,7 @@ public class Main {
     static void createBoat(int N, char board[][]) {
 
         boolean isShipPossible = true;
-
+        boolean hiddenBoat = true;
         do {
             //ALEA
             int HV = getRandom(1);
@@ -109,8 +109,10 @@ public class Main {
                 for (int i = 0; i <= N - 1; i = i + 1) {
                     if (HV == 0) {//vertical
                         board[idxRow][idxCol + i] = '#';
+                        System.out.print('~');
                     } else {//horizontal
                         board[idxRow + i][idxCol] = '#';
+                        System.out.print('~');
                     }
                 }
             }
@@ -119,7 +121,7 @@ public class Main {
     }
 
     /**
-     * function that takes a string as a parameter and checks if the first character
+     * getInputColIndex(): function that takes a string as a parameter and checks if the first character
      * is between A and J.
      * if it is not the case, it returns -1
      */
@@ -134,7 +136,7 @@ public class Main {
     }
 
     /**
-     * function that takes a string as a parameter and checks if second and third characters
+     * getInputRowIndex(): function that takes a string as a parameter and checks if second and third characters
      * are between '1' and '10'.
      * if it is not the case, it returns -1
      */
@@ -155,6 +157,9 @@ public class Main {
         return -1;
     }
 
+    /**
+     * shoot(): Function witch shoots on the battlefield thanks to the coordinates entered by the player.
+     */
     static boolean shoot(int rowIdx, int colIdx, char board[][]) {
         if (board[rowIdx][colIdx] == '#') { // touched
             board[rowIdx][colIdx] = 'x';
@@ -170,6 +175,9 @@ public class Main {
         }
     }
 
+    /**
+     * turnPlayer(): Function witch defines when the human player can play.
+     */
     static boolean turnPlayer(char board[][]) {
         System.out.println("Enter position: ");
         Scanner sc = new Scanner(System.in);
@@ -188,6 +196,9 @@ public class Main {
         }
     }
 
+    /**
+     * turnEnemy(): Function witch defines when the "IA" can play.
+     */
     static boolean turnEnemy(char board[][]) {
         int colIdx = getRandom(9);
         int rowIdx = getRandom(9);
@@ -195,6 +206,9 @@ public class Main {
         return shoot(rowIdx, colIdx, board);
     }
 
+    /**
+     * scanShip(): Function witch scans all the battlefield and returns the number of remaining boats.
+     */
     static int scanShip(char board[][]) {
         int nbship = 0;
         for (int i = 0; i < board.length; i = i + 1) { // rows
@@ -207,8 +221,9 @@ public class Main {
         return nbship;
     }
 
-
-
+    /**
+     * doYouWantReplay(): Function witch ask the player if he wants to retry or quit .
+     */
     static boolean doYouWantReplay(){
         Scanner sc = new Scanner(System.in);
 
@@ -237,11 +252,8 @@ public class Main {
             initBoard(enemyBoard);
             initBoard(playerBoard);
 
-            // game loop
             boolean isMyTurn = true;
             boolean gameOver = false;
-            // int lifeCpu = scanShip(enemyBoard);
-            // int lifePlayer = scanShip(playerBoard);
 
                 while (gameOver == false) {
                     displayBoard(enemyBoard,true);
@@ -249,11 +261,8 @@ public class Main {
                     displayBoard(playerBoard,false);
 
                     if (isMyTurn) {
-                        // recup retour de turnplayer
-                        // si c false, alors ca l'ordi de jouer : modif du booleen cestmontour
                         isMyTurn = turnPlayer(enemyBoard);
                         if (isMyTurn) {
-                            //lifeCpu = lifeCpu-1;
                             if (scanShip(enemyBoard) == 0) {
                                 gameOver = true;
                             }
@@ -262,7 +271,6 @@ public class Main {
                     } else {
                         isMyTurn = turnEnemy(playerBoard);
                         if (isMyTurn) {
-                            //lifePlayer = lifePlayer -1;
                             if (scanShip(playerBoard) == 0) {
                                 gameOver = true;
                             }
