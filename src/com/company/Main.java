@@ -52,8 +52,8 @@ public class Main {
             }
         }
         //createBoat(5,board);
-        createBoat(2,board);
-        //createBoat(3,board);
+        //createBoat(2,board);
+        createBoat(3,board);
         //createBoat(3,board);
         //createBoat(4,board);
     }
@@ -191,6 +191,18 @@ public class Main {
         System.out.print("CPU : ");
         return shoot(rowIdx, colIdx, board);
     }
+    static int scanShip(char board[][]){
+        int nbship =0;
+        for (int i = 0; i < board.length; i = i + 1) { // rows
+            for (int j = 0; j < board[0].length; j = j + 1) { // columns
+                if(board[i][j]=='#'){
+                nbship =nbship+1;
+                }
+            }
+        }
+        return nbship;
+
+    }
 
     public static void main(String[] args) {
 
@@ -206,8 +218,8 @@ public class Main {
         // game loop
          boolean isMyTurn = true;
          boolean gameOver = false;
-         int tire = 2;
-         int tire2 = 2;
+        // int lifeCpu = scanShip(enemyBoard);
+        // int lifePlayer = scanShip(playerBoard);
         while (gameOver == false) {
             displayBoard(enemyBoard);
             System.out.println(" ");
@@ -219,8 +231,8 @@ public class Main {
                 // si c false, alors ca l'ordi de jouer : modif du booleen cestmontour
                 isMyTurn = turnPlayer(enemyBoard);
                 if(isMyTurn){
-                    tire = tire-1;
-                    if(tire==0){
+                    //lifeCpu = lifeCpu-1;
+                    if(scanShip(enemyBoard)==0){
                     gameOver = true;
                     }
                 }
@@ -231,8 +243,8 @@ public class Main {
                     // si c false alors c a moi de jouer : modif la valeur du booleen
                     isMyTurn = turnEnemy(playerBoard);
                     if(isMyTurn){
-                        tire2 = tire2 -1;
-                        if(tire2 ==0){
+                        //lifePlayer = lifePlayer -1;
+                        if(scanShip(playerBoard) ==0){
                             gameOver = true;
                         }
                         isMyTurn = false;
@@ -245,10 +257,10 @@ public class Main {
         }
         System.out.println("game over");
         System.out.println(" ");
-        if(tire==0){
-            System.out.println("win!!!");
+        if(scanShip(enemyBoard)==0){
+            System.out.println("player win!!!");
         }else{
-            System.out.println("cpuWin!!");
+            System.out.println("cpu Win!!");
         }
     }
 }
