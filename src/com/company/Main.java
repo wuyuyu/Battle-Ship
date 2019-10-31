@@ -21,8 +21,8 @@ public class Main {
 
         // display letters according to the array width
         System.out.print("    ");
-        for(int j=0;j<board[0].length;j=j+1){
-            System.out.print( (char)(letter+j) );
+        for (int j = 0; j < board[0].length; j = j + 1) {
+            System.out.print((char) (letter + j));
             System.out.print(" ");
         }
         System.out.print("\n");
@@ -33,10 +33,10 @@ public class Main {
             for (int j = 0; j < board[0].length; j = j + 1) { // columns
                 line = line + board[i][j] + " ";
             }
-            if(i<9){
+            if (i < 9) {
                 System.out.print(" ");
             }
-            System.out.print( (i+1) +"  "); // row index
+            System.out.print((i + 1) + "  "); // row index
             System.out.println(line);
         }
     }
@@ -44,32 +44,32 @@ public class Main {
     /**
      * initBoard() : Function which displays the elements of the battlefield.
      */
-    static void initBoard (char board[][]) {
+    static void initBoard(char board[][]) {
 
         for (int i = 0; i < board.length; i = i + 1) { // rows
             for (int j = 0; j < board[0].length; j = j + 1) { // columns
                 board[i][j] = '~';
             }
         }
-        createBoat(5,board);
-        createBoat(2,board);
-        createBoat(3,board);
-        createBoat(3,board);
-        createBoat(4,board);
+//        createBoat(5, board);
+        createBoat(2, board);
+/*        createBoat(3, board);
+        createBoat(3, board);
+        createBoat(4, board);*/
     }
 
     /**
      * getRandom() : Function which returns a random value between 0 included
      * and 'maxValue' included.
      */
-    static int getRandom(int maxValue){
-        return (int)( Math.random()*(maxValue+1) );
+    static int getRandom(int maxValue) {
+        return (int) (Math.random() * (maxValue + 1));
     }
 
     /**
      * createBoat() : Function which creates and displays boats randomly on the battlefield.
      */
-    static void createBoat (int N,char board[][]){
+    static void createBoat(int N, char board[][]) {
 
         boolean isShipPossible = true;
 
@@ -77,7 +77,7 @@ public class Main {
             //ALEA
             int HV = getRandom(1);
             int idxRow = getRandom(9);
-            int idxCol= getRandom(9);
+            int idxCol = getRandom(9);
             if (HV == 0) {
                 idxCol = getRandom(board[0].length - N);
             } else {
@@ -110,7 +110,7 @@ public class Main {
                 }
             }
         }
-            while (isShipPossible == false);
+        while (isShipPossible == false);
     }
 
     /**
@@ -118,33 +118,32 @@ public class Main {
      * is between A and J.
      * if it is not the case, it returns -1
      */
-        static int getInputColIndex(String s){
-            if(s.length() > 0){
-                char first = s.toLowerCase().charAt(0);
-            if(first >= 'a' && first <= 'j') {
-                return (first-'a');
+    static int getInputColIndex(String s) {
+        if (s.length() > 0) {
+            char first = s.toLowerCase().charAt(0);
+            if (first >= 'a' && first <= 'j') {
+                return (first - 'a');
             }
         }
         return -1;
-        }
+    }
 
     /**
-     *function that takes a string as a parameter and checks if second and third characters
+     * function that takes a string as a parameter and checks if second and third characters
      * are between '1' and '10'.
-     *if it is not the case, it returns -1
+     * if it is not the case, it returns -1
      */
-    static int getInputRowIndex(String s){
-        if(s.length() > 1){
+    static int getInputRowIndex(String s) {
+        if (s.length() > 1) {
             char second = s.toLowerCase().charAt(1);
-            if(second >= '1' && second <= '9') {
-                if(s.length() > 2) {
+            if (second >= '1' && second <= '9') {
+                if (s.length() > 2) {
                     char third = s.toLowerCase().charAt(2);
                     if (third == '0') {
-                        return Integer.parseInt(s.substring(1, 3))-1;
+                        return Integer.parseInt(s.substring(1, 3)) - 1;
                     }
-                }
-                else{
-                    return (second-'0'-1);
+                } else {
+                    return (second - '0' - 1);
                 }
             }
         }
@@ -154,32 +153,31 @@ public class Main {
     static boolean shoot(int rowIdx, int colIdx, char board[][]) {
         if (board[rowIdx][colIdx] == '#') { // touched
             board[rowIdx][colIdx] = 'x';
-            System.out.println("Touché !");
+            System.out.println("Hit !");
             return true;
         } else if (board[rowIdx][colIdx] == 'x') {//already touched
-            System.out.println("Vous avez déjà touché cette cible !");
+            System.out.println("You already have hit the target, stupid human !");
             return false;
         } else { //failed
-            System.out.println("Vous n'avez pas atteint votre cible.");
+            System.out.println("You suck.");
             board[rowIdx][colIdx] = 'o';
             return false;
         }
     }
 
     static boolean turnPlayer(char board[][]) {
-        System.out.println("Entrez des coordonnées : ");
+        System.out.println("Enter position: ");
         Scanner sc = new Scanner(System.in);
         String input = sc.next();
         // get column index
         int colIdx = getInputColIndex(input);
         // get row index
         int rowIdx = getInputRowIndex(input);
-        if(colIdx != -1 && rowIdx != -1){
+        if (colIdx != -1 && rowIdx != -1) {
             System.out.print("PLAYER : ");
             return shoot(rowIdx, colIdx, board);
             // Here i got valid position for ROW and COLUMN indexes
-        }
-        else{
+        } else {
             // i typed something wrong
             return true;
         }
@@ -191,76 +189,95 @@ public class Main {
         System.out.print("CPU : ");
         return shoot(rowIdx, colIdx, board);
     }
-    static int scanShip(char board[][]){
-        int nbship =0;
+
+    static int scanShip(char board[][]) {
+        int nbship = 0;
         for (int i = 0; i < board.length; i = i + 1) { // rows
             for (int j = 0; j < board[0].length; j = j + 1) { // columns
-                if(board[i][j]=='#'){
-                nbship =nbship+1;
+                if (board[i][j] == '#') {
+                    nbship = nbship + 1;
                 }
             }
         }
         return nbship;
+    }
 
+
+
+    static boolean doYouWantReplay(){
+        Scanner sc = new Scanner(System.in);
+
+        while( true ) {
+            System.out.println("Reload Game ? Y/N ");
+            String s = sc.next();
+            if (s.length() == 1) {
+                if (s.equals("Y") || s.equals("y")) {
+                    return true;
+                } else if (s.equals("N") || s.equals("n")) {
+                    return false;
+                }
+            }
+        }
     }
 
     public static void main(String[] args) {
 
-        System.out.println("**** Welcome to the battleship game ! **** ");
-        System.out.println(" ");
-
-        char playerBoard[][] = new char[10][10];
-        char enemyBoard[][] = new char[10][10];
-
-        initBoard(enemyBoard);
-        initBoard(playerBoard);
-
-        // game loop
-         boolean isMyTurn = true;
-         boolean gameOver = false;
-        // int lifeCpu = scanShip(enemyBoard);
-        // int lifePlayer = scanShip(playerBoard);
-        while (gameOver == false) {
-            displayBoard(enemyBoard);
+        do {
+            System.out.println("**** Welcome to the battleship game ! **** ");
             System.out.println(" ");
-            displayBoard(playerBoard);
 
+            char playerBoard[][] = new char[10][10];
+            char enemyBoard[][] = new char[10][10];
 
-            if (isMyTurn) {
-                // recup retour de turnplayer
-                // si c false, alors ca l'ordi de jouer : modif du booleen cestmontour
-                isMyTurn = turnPlayer(enemyBoard);
-                if(isMyTurn){
-                    //lifeCpu = lifeCpu-1;
-                    if(scanShip(enemyBoard)==0){
-                    gameOver = true;
+            initBoard(enemyBoard);
+            initBoard(playerBoard);
+
+            // game loop
+            boolean isMyTurn = true;
+            boolean gameOver = false;
+            // int lifeCpu = scanShip(enemyBoard);
+            // int lifePlayer = scanShip(playerBoard);
+
+                while (gameOver == false) {
+                    displayBoard(enemyBoard);
+                    System.out.println(" ");
+                    displayBoard(playerBoard);
+
+                    if (isMyTurn) {
+                        // recup retour de turnplayer
+                        // si c false, alors ca l'ordi de jouer : modif du booleen cestmontour
+                        isMyTurn = turnPlayer(enemyBoard);
+                        if (isMyTurn) {
+                            //lifeCpu = lifeCpu-1;
+                            if (scanShip(enemyBoard) == 0) {
+                                gameOver = true;
+                            }
+                        }
+
+                    } else {
+                        isMyTurn = turnEnemy(playerBoard);
+                        if (isMyTurn) {
+                            //lifePlayer = lifePlayer -1;
+                            if (scanShip(playerBoard) == 0) {
+                                gameOver = true;
+                            }
+                            isMyTurn = false;
+                        } else {
+                            isMyTurn = true;
+                        }
+
                     }
                 }
+                System.out.println("game over");
+                System.out.println(" ");
+                if (scanShip(enemyBoard) == 0) {
+                    System.out.println("player win!!!");
+                } else {
+                    System.out.println("cpu Win!!");
+                }
 
-            }
-            else {
-                    // recjup retour de turnenemey
-                    // si c false alors c a moi de jouer : modif la valeur du booleen
-                    isMyTurn = turnEnemy(playerBoard);
-                    if(isMyTurn){
-                        //lifePlayer = lifePlayer -1;
-                        if(scanShip(playerBoard) ==0){
-                            gameOver = true;
-                        }
-                        isMyTurn = false;
-                    }
-                    else{
-                        isMyTurn = true ;
-                    }
+        } while( doYouWantReplay() == true);
 
-            }
-        }
-        System.out.println("game over");
-        System.out.println(" ");
-        if(scanShip(enemyBoard)==0){
-            System.out.println("player win!!!");
-        }else{
-            System.out.println("cpu Win!!");
-        }
+        System.out.println("See you soon for the next Battleship !");
     }
 }
