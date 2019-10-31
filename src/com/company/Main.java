@@ -51,11 +51,11 @@ public class Main {
                 board[i][j] = '~';
             }
         }
-        //createBoat(5,board);
-        //createBoat(2,board);
+        createBoat(5,board);
+        createBoat(2,board);
         createBoat(3,board);
-        //createBoat(3,board);
-        //createBoat(4,board);
+        createBoat(3,board);
+        createBoat(4,board);
     }
 
     /**
