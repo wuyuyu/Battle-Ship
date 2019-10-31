@@ -6,6 +6,7 @@ package com.company;
  * Description   : TP "BATAILLE NAVALE"
  */
 
+import java.sql.SQLOutput;
 import java.util.Random;
 import java.util.Scanner;
 public class Main {
@@ -50,11 +51,11 @@ public class Main {
                 board[i][j] = '~';
             }
         }
-        createBoat(5,board);
+        //createBoat(5,board);
         createBoat(2,board);
-        createBoat(3,board);
-        createBoat(3,board);
-        createBoat(4,board);
+        //createBoat(3,board);
+        //createBoat(3,board);
+        //createBoat(4,board);
     }
 
     /**
@@ -139,7 +140,7 @@ public class Main {
                 if(s.length() > 2) {
                     char third = s.toLowerCase().charAt(2);
                     if (third == '0') {
-                        return Integer.parseInt(s.substring(1, 2))-1;
+                        return Integer.parseInt(s.substring(1, 3))-1;
                     }
                 }
                 else{
@@ -196,28 +197,58 @@ public class Main {
         System.out.println("**** Welcome to the battleship game ! **** ");
         System.out.println(" ");
 
-        char playerBoard [][] = new char[10][10] ;
-        char enemyBoard [][] = new char[10][10];
+        char playerBoard[][] = new char[10][10];
+        char enemyBoard[][] = new char[10][10];
 
         initBoard(enemyBoard);
         initBoard(playerBoard);
 
         // game loop
-        while( true ){
+         boolean isMyTurn = true;
+         boolean gameOver = false;
+         int tire = 2;
+         int tire2 = 2;
+        while (gameOver == false) {
             displayBoard(enemyBoard);
+            System.out.println(" ");
             displayBoard(playerBoard);
 
-            /*if(      ) {
+
+            if (isMyTurn) {
                 // recup retour de turnplayer
                 // si c false, alors ca l'ordi de jouer : modif du booleen cestmontour
-                turnPlayer(enemyBoard);
-            }
-            else{
-                // recjup retour de turnenemey
-                // si c false alors c a moi de jouer : modif la valeur du booleen
-                turnEnemy(playerBoard);
-            }*/
-        }
+                isMyTurn = turnPlayer(enemyBoard);
+                if(isMyTurn){
+                    tire = tire-1;
+                    if(tire==0){
+                    gameOver = true;
+                    }
+                }
 
+            }
+            else {
+                    // recjup retour de turnenemey
+                    // si c false alors c a moi de jouer : modif la valeur du booleen
+                    isMyTurn = turnEnemy(playerBoard);
+                    if(isMyTurn){
+                        tire2 = tire2 -1;
+                        if(tire2 ==0){
+                            gameOver = true;
+                        }
+                        isMyTurn = false;
+                    }
+                    else{
+                        isMyTurn = true ;
+                    }
+
+            }
+        }
+        System.out.println("game over");
+        System.out.println(" ");
+        if(tire==0){
+            System.out.println("win!!!");
+        }else{
+            System.out.println("cpuWin!!");
+        }
     }
 }
