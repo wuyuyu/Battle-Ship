@@ -56,19 +56,11 @@ public class Main {
                 board[i][j] = '~';
             }
         }
-<<<<<<< HEAD
-        createBoat(5, board);
-        createBoat(2, board);
-        createBoat(3, board);
-        createBoat(3, board);
-        createBoat(4, board);
-=======
            createBoat(5, board);
            createBoat(2, board);
            createBoat(3, board);
            createBoat(3, board);
            createBoat(4, board);
->>>>>>> master
     }
 
     /**
@@ -117,10 +109,8 @@ public class Main {
                 for (int i = 0; i <= N - 1; i = i + 1) {
                     if (HV == 0) {//vertical
                         board[idxRow][idxCol + i] = '#';
-                        System.out.print('~');
                     } else {//horizontal
                         board[idxRow + i][idxCol] = '#';
-                        System.out.print('~');
                     }
                 }
             }
